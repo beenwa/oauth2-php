@@ -11,7 +11,7 @@
 // Clickjacking prevention (supported by IE8+, FF3.6.9+, Opera10.5+, Safari4+, Chrome 4.1.249.1042+)
 header('X-Frame-Options: DENY');
 
-require "lib/OAuth2StoragePDO.php";
+require __DIR__."/lib/OAuth2StoragePDO.php";
 
 /*
  * You would need to authenticate the user before authorization.
@@ -28,7 +28,7 @@ if (!isLoggedIn()) {
 $oauth = new OAuth2(new OAuth2StoragePDO());
 
 if ($_POST) {
-	$userId = $_SESSION['user_id']; // Use whatever method you have for identifying users.
+	$userId = rand();//$_SESSION['user_id']; // Use whatever method you have for identifying users.
 	$oauth->finishClientAuthorization($_POST["accept"] == "Yep", $userId, $_POST);
 }
 
@@ -51,11 +51,9 @@ try {
 </head>
 <body>
 <form method="post" action="authorize.php">
-      <?php foreach ($auth_params as $key => $value) : ?>
-      	<input type="hidden"
-	name="<?php htmlspecialchars($key, ENT_QUOTES); ?>"
-	value="<?php echo htmlspecialchars($value, ENT_QUOTES); ?>" />
-      <?php endforeach; ?>
+      <?php foreach ($auth_params as $key => $value) { ?>
+      	<input type="hidden" name="<?php echo htmlspecialchars($key, ENT_QUOTES, 'UTF-8'); ?>" value="<?php echo htmlspecialchars($value, ENT_QUOTES, 'UTF-8'); ?>" />
+      <?php } ?>
       Do you authorize the app to do its thing?
       <p><input type="submit" name="accept" value="Yep" /> <input
 	type="submit" name="accept" value="Nope" /></p>

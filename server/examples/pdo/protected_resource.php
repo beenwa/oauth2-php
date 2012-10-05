@@ -9,7 +9,7 @@
  * In reality, you'd probably use a nifty framework to handle most of the crud for you.
  */
 
-require "lib/OAuth2StoragePDO.php";
+require __DIR__."/lib/OAuth2StoragePDO.php";
 
 try {
 	$oauth = new OAuth2(new OAuth2StoragePDO());
